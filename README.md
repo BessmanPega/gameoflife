@@ -1,5 +1,7 @@
 # Conway's Game of Life
 
+https://github.com/user-attachments/assets/39281ae4-f2e1-45d3-99ec-0056ff22e771
+
 This is a mostly vibe-coded experiment, inspired by [Richard Marsot's work](https://www.linkedin.com/posts/richard-marsot-266929_building-a-constellation-dx-component-has-share-7443079944269651968-FyZZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAETwqEBtGeQvyHzwHwOdEL6oqNxRBtnijE). I started by asking Gemini 3.1 pro the following:
 
 ```
