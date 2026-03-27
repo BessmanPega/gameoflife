@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-This is a mostly vibe-coded experiment. I started by asking Gemini 3.1 pro the following:
+This is a mostly vibe-coded experiment, inspired by [Richard Marsot's work](https://www.linkedin.com/posts/richard-marsot-266929_building-a-constellation-dx-component-has-share-7443079944269651968-FyZZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAETwqEBtGeQvyHzwHwOdEL6oqNxRBtnijE). I started by asking Gemini 3.1 pro the following:
 
 ```
 Generate a custom Constellation DX Component that implements Conway's Game of Life, as defined here: Conway's Game of Life - Wikipedia
@@ -265,6 +265,6 @@ As stated previously, Gemini's plan was pretty sound overall. Here's where I had
    - `no-plusplus`
    - `react/no-array-index-key`
 
-All told, I think I spent more time typing this up then coding — probably about 15 minutes of actual hands-on-keyboard dev work, and another 15 minutes "talking" to Gemini. Maybe five more minutes were spent on publishing the component to my personal Infinity environment and adding it to my sandbox app.
+All told, I think I spent more time typing this up then coding — probably about 15 minutes of actual hands-on-keyboard dev work, and another 15 minutes "talking" to Gemini. Maybe another 5 minutes were spent on publishing the component to my personal Infinity environment and adding it to my sandbox app through the reuse library.
 
 Note that I did this through Gemini's chat interface, not with VSCode and Copilot, or OpenCode, or Claude Code. That would add another level of capability and ergonomics. But I wanted to see how competent a model alone could be, and the answer for this experiment at least is: quite good!

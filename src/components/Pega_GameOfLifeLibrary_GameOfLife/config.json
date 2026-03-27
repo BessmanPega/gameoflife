@@ -1,56 +1,53 @@
 {
-    "name": "Pega_GameOfLifeLibrary_GameOfLife",
-    "label": "Game Of Life",
-    "description": "Conway&#39;s game of life.",
-    "organization": "Pega",
-    "version": "0.0.1",
-    "library": "GameOfLifeLibrary",
-    "componentKey": "Pega_GameOfLifeLibrary_GameOfLife",
-    "type": "Widget",
-    "subtype": [
-        "PAGE",
-        "CASE"
-    ],
-    "subtypeLabel": "PAGE and CASE",
-    "icon": "OneColumnPage.svg",
-    "properties": [
-        {
-            "name": "label",
-            "label": "Widget Label",
-            "format": "TEXT",
-            "type": "Property"
-        },
-        {
-            "name": "rows",
-            "label": "Number of Rows",
-            "format": "INTEGER",
-            "type": "Property"
-        },
-        {
-            "name": "cols",
-            "label": "Number of Columns",
-            "format": "INTEGER",
-            "type": "Property"
-        },
-        {
-            "format": "LABEL",
-            "label": "About",
-            "name": "PegaAboutLabel",
-            "variant": "h3"
-        },
-        {
-            "format": "LABEL",
-            "label": "Pega_GameOfLifeLibrary 0.0.1, Fri Mar 27 2026, 25.1.0-dev-15104",
-            "name": "PegaAboutData",
-            "variant": "primary"
-        }
-    ],
-    "defaultConfig": {
-        "label": "Conway's game of life",
-        "rows": 8,
-        "cols": 8
+  "name": "Pega_GameOfLifeLibrary_GameOfLife",
+  "label": "Game Of Life",
+  "description": "Conway&#39;s game of life.",
+  "organization": "Pega",
+  "version": "0.0.1",
+  "library": "GameOfLifeLibrary",
+  "componentKey": "Pega_GameOfLifeLibrary_GameOfLife",
+  "type": "Widget",
+  "subtype": ["PAGE", "CASE"],
+  "subtypeLabel": "PAGE and CASE",
+  "icon": "OneColumnPage.svg",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Widget Label",
+      "format": "TEXT",
+      "type": "Property"
     },
-    "buildDate": "2026-03-27T20:44:00.734Z",
-    "infinityVersion": "25.1.0-dev-15104",
-    "packageCosmosVersion": "8.15.5"
+    {
+      "name": "rows",
+      "label": "Number of Rows",
+      "format": "NUMBER",
+      "type": "Property"
+    },
+    {
+      "name": "cols",
+      "label": "Number of Columns",
+      "format": "NUMBER",
+      "type": "Property"
+    },
+    {
+      "format": "LABEL",
+      "label": "About",
+      "name": "PegaAboutLabel",
+      "variant": "h3"
+    },
+    {
+      "format": "LABEL",
+      "label": "Pega_GameOfLifeLibrary 0.0.1, Fri Mar 27 2026, 25.1.0-dev-15104",
+      "name": "PegaAboutData",
+      "variant": "primary"
+    }
+  ],
+  "defaultConfig": {
+    "label": "Conway's game of life",
+    "rows": 8,
+    "cols": 8
+  },
+  "buildDate": "2026-03-27T21:10:31.029Z",
+  "infinityVersion": "25.1.0-dev-15104",
+  "packageCosmosVersion": "8.15.5"
 }
