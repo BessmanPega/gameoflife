@@ -4,19 +4,17 @@ https://github.com/user-attachments/assets/39281ae4-f2e1-45d3-99ec-0056ff22e771
 
 This is a mostly vibe-coded experiment, inspired by [Richard Marsot's work](https://www.linkedin.com/posts/richard-marsot-266929_building-a-constellation-dx-component-has-share-7443079944269651968-FyZZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAETwqEBtGeQvyHzwHwOdEL6oqNxRBtnijE). I started by asking Gemini 3.1 pro the following:
 
-```
-Generate a custom Constellation DX Component that implements Conway's Game of Life, as defined here: Conway's Game of Life - Wikipedia
-
-Use these resources to help write parsimonious and performant code:
-
-* Components in the Constellation Design System: Constellation front-end and low-code development | Pega Constellation design system
-
-* Examples of custom Constellation DX Components: constellation-ui-gallery/src/components at master · pegasystems/constellation-ui-gallery · GitHub
-
-* Documentation for the API's used to build Constellation DX Components: Using PCore and PConnect public APIs
-
-* Technical information about Constellation DX Component development: Constellation DX components
-```
+> Generate a custom Constellation DX Component that implements Conway's Game of Life, as defined here: [Conway's Game of Life - Wikipedia](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+>
+> Use these resources to help write parsimonious and performant code:
+>
+> * Components in the Constellation Design System: [Constellation front-end and low-code development | Pega Constellation design system](https://design.pega.com/version/8.8/develop/)
+>
+> * Examples of custom Constellation DX Components: [constellation-ui-gallery/src/components at master · pegasystems/constellation-ui-gallery · GitHub](https://github.com/pegasystems/constellation-ui-gallery/tree/master/src/components)
+>
+> * Documentation for the API's used to build Constellation DX Components: [Using PCore and PConnect public APIs](https://docs.pega.com/bundle/pcore-pconnect/page/pcore-pconnect-public-apis/api/using-pcore-pconnect-public-apis.html)
+>
+> * Technical information about Constellation DX Component development: [Constellation DX components](https://docs.pega.com/bundle/constellation-dx-components/page/constellation-dx-components/custom-components/custom-components.html)
 
 It came back with a pretty good plan.
 
