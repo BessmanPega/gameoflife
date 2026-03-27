@@ -1,3 +1,7 @@
+/tasks.config.json
+/Pega_GameOfLifeLibrary/*
+/store/*
+
 # Logs
 logs
 *.log

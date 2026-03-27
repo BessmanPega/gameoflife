@@ -1,66 +1,56 @@
 {
-  "name": "Pega_GameOfLifeLibrary_GameOfLife",
-  "label": "Game Of Life",
-  "description": "Conway&#39;s game of life.",
-  "organization": "Pega",
-  "version": "0.0.1",
-  "library": "GameOfLifeLibrary",
-  "componentKey": "Pega_GameOfLifeLibrary_GameOfLife",
-  "type": "Widget",
-  "subtype": ["PAGE","CASE"],
-  "subtypeLabel": "PAGE and CASE",
-  "icon": "OneColumnPage.svg",
-   "properties": [
-    {
-      "name": "title",
-      "label": "Label value",
-      "format": "TEXT"
-    },
-    {
-      "format": "SELECT",
-      "label": "Usage",
-      "name": "label",
-      "defaultValue": "Create operator",
-      "localize": true,
-      "source": [
+    "name": "Pega_GameOfLifeLibrary_GameOfLife",
+    "label": "Game Of Life",
+    "description": "Conway&#39;s game of life.",
+    "organization": "Pega",
+    "version": "0.0.1",
+    "library": "GameOfLifeLibrary",
+    "componentKey": "Pega_GameOfLifeLibrary_GameOfLife",
+    "type": "Widget",
+    "subtype": [
+        "PAGE",
+        "CASE"
+    ],
+    "subtypeLabel": "PAGE and CASE",
+    "icon": "OneColumnPage.svg",
+    "properties": [
         {
-          "key": "Create operator",
-          "value": "Create operator"
+            "name": "label",
+            "label": "Widget Label",
+            "format": "TEXT",
+            "type": "Property"
         },
         {
-          "key": "Update operator",
-          "value": "Update operator"
+            "name": "rows",
+            "label": "Number of Rows",
+            "format": "INTEGER",
+            "type": "Property"
         },
         {
-          "key": "Resolve operator",
-          "value": "Resolve operator"
-        }
-      ]
-    },
-
-    {
-      "label": "Conditions",
-      "format": "GROUP",
-      "properties": [
+            "name": "cols",
+            "label": "Number of Columns",
+            "format": "INTEGER",
+            "type": "Property"
+        },
         {
-          "name": "visibility",
-          "label": "Visibility",
-          "format": "VISIBILITY"
+            "format": "LABEL",
+            "label": "About",
+            "name": "PegaAboutLabel",
+            "variant": "h3"
+        },
+        {
+            "format": "LABEL",
+            "label": "Pega_GameOfLifeLibrary 0.0.1, Fri Mar 27 2026, 25.1.0-dev-15104",
+            "name": "PegaAboutData",
+            "variant": "primary"
         }
-      ]
-    }
-  ],
-  "defaultConfig": {
-    "label": "Create operator",
-    "title": "Create operator",
-    "createLabel": "@L Created",
-    "updateLabel": "@L Updated",
-    "createOperator": "@USER .pxCreateOperator",
-    "updateOperator": "@USER .pxUpdateOperator",
-    "createDateTime": "@P .pxCreateDateTime",
-    "updateDateTime": "@P .pxUpdateDateTime",
-    "resolveLabel": "@L Resolved",
-    "resolveOperator": "@USER .pyResolvedUserID",
-    "resolveDateTime": "@P .pyResolvedTimestamp"
-  }
+    ],
+    "defaultConfig": {
+        "label": "Conway's game of life",
+        "rows": 8,
+        "cols": 8
+    },
+    "buildDate": "2026-03-27T20:44:00.734Z",
+    "infinityVersion": "25.1.0-dev-15104",
+    "packageCosmosVersion": "8.15.5"
 }

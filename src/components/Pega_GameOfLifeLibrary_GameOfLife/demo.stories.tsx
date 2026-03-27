@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import PegaGameOfLifeLibraryGameOfLife from './index';
 
-import { configProps, operatorDetails } from './mock';
+import { configProps } from './mock';
 
 const meta: Meta<typeof PegaGameOfLifeLibraryGameOfLife> = {
   title: 'PegaGameOfLifeLibraryGameOfLife',
@@ -38,39 +38,43 @@ window.PCore.getUserApi = () => {
 };
 
 export const BasePegaGameOfLifeLibraryGameOfLife: Story = (args: any) => {
-
   const props = {
-    label: configProps.label,
-    createOperator: configProps.createOperator,
-    updateOperator: configProps.updateOperator,
-    createDateTime: configProps.createDateTime,
-    updateDateTime: configProps.updateDateTime,
+    // Read from args so Storybook controls take effect
+    label: args.label !== undefined ? args.label : configProps.label,
+    rows: args.rows !== undefined ? args.rows : configProps.rows,
+    cols: args.cols !== undefined ? args.cols : configProps.cols,
 
     getPConnect: () => {
       return {
         getActionsApi: () => {
           return {
-            updateFieldValue: () => {/* nothing */},
-            triggerFieldChange: () => {/* nothing */}
+            updateFieldValue: () => {
+              /* nothing */
+            },
+            triggerFieldChange: () => {
+              /* nothing */
+            }
           };
         },
-        ignoreSuggestion: () => {/* nothing */},
-        acceptSuggestion: () => {/* nothing */},
-        setInheritedProps: () => {/* nothing */},
-        resolveConfigProps: () => {/* nothing */}
+        ignoreSuggestion: () => {
+          /* nothing */
+        },
+        acceptSuggestion: () => {
+          /* nothing */
+        },
+        setInheritedProps: () => {
+          /* nothing */
+        },
+        resolveConfigProps: () => {
+          /* nothing */
+        }
       };
     }
-};
+  };
 
-return (
+  return (
     <>
       <PegaGameOfLifeLibraryGameOfLife {...props} {...args} />
     </>
   );
-};
-
-BasePegaGameOfLifeLibraryGameOfLife.args = {
-  createLabel: configProps.createLabel,
-  updateLabel: configProps.updateLabel,
-  hideLabel: configProps.hideLabel
 };

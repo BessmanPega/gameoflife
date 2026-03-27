@@ -1,114 +1,169 @@
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Button, Flex, Text } from '@pega/cosmos-react-core';
 
-/* eslint-disable no-nested-ternary */
-import { Fragment } from 'react';
-import { DateTimeDisplay, Card, CardHeader, CardContent, Flex, withConfiguration } from '@pega/cosmos-react-core';
+// Neighbor coordinate offsets (8 surrounding cells)
+const operations = [
+  [0, 1],
+  [0, -1],
+  [1, -1],
+  [-1, 1],
+  [1, 1],
+  [-1, -1],
+  [1, 0],
+  [-1, 0]
+];
 
-import type { PConnFieldProps } from '../shared/PConnProps';
+export default function GameOfLifeWidget(props) {
+  // getPConnect is injected by Constellation framework
+  const { getPConnect, label = "Conway's Game of Life", rows = 30, cols = 30 } = props;
 
-// includes in bundle
-import Operator from './Operator';
+  // Enforce minimum and sensible default limits
+  const numRows = parseInt(rows, 10) || 30;
+  const numCols = parseInt(cols, 10) || 30;
 
-import StyledPegaGameOfLifeLibraryGameOfLifeWrapper from './styles';
+  // Initialize a blank grid
+  const createEmptyGrid = useCallback(() => {
+    return Array.from({ length: numRows }).map(() => Array.from({ length: numCols }).fill(0));
+  }, [numRows, numCols]);
 
+  const [grid, setGrid] = useState(createEmptyGrid);
+  const [running, setRunning] = useState(false);
 
-// interface for props
-interface PegaGameOfLifeLibraryGameOfLifeProps extends PConnFieldProps {
-  // If any, enter additional props that only exist on TextInput here
-  title: string;
-  createLabel: string;
-  updateLabel: string;
-  resolveLabel: string;
-  createOperator: any;
-  updateOperator: any;
-  resolveOperator: any;
-  createDateTime: string;
-  updateDateTime: string;
-  resolveDateTime: string;
-  hideLabel: boolean;
-}
+  // We use refs to safely access the latest state of "running" within the recursive interval
+  const runningRef = useRef(running);
+  runningRef.current = running;
 
+  // NEW: React to rows/cols changes from App Studio or Storybook
+  useEffect(() => {
+    setGrid(createEmptyGrid());
+    setRunning(false); // Stop simulation if grid changes size
+  }, [createEmptyGrid]);
 
-// Duplicated runtime code from Constellation Design System Component
+  // Core simulation engine
+  const runSimulation = useCallback(() => {
+    if (!runningRef.current) return;
 
-// props passed in combination of props from property panel (config.json) and run time props from Constellation
-// any default values in config.pros should be set in defaultProps at bottom of this file
-function PegaGameOfLifeLibraryGameOfLife(props: PegaGameOfLifeLibraryGameOfLifeProps) {
+    setGrid(g => {
+      // Create deep clone of the current grid to avoid direct mutation
+      const nextGrid = g.map(arr => [...arr]);
 
-  const {
-    getPConnect,
-    title = 'Create operator',
-    label = 'Create operator',
-    createLabel,
-    updateLabel,
-    createOperator,
-    updateOperator,
-    createDateTime,
-    updateDateTime,
-    resolveLabel,
-    resolveOperator,
-    resolveDateTime,
-    hideLabel
-  } = props;
+      for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+          let neighbors = 0;
 
+          operations.forEach(([x, y]) => {
+            const newI = i + x;
+            const newJ = j + y;
+            // Check bounds
+            if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
+              neighbors += g[newI][newJ];
+            }
+          });
 
-  const [_label, user, dateTimeValue] =
-    label === 'Create operator'
-      ? [createLabel, createOperator, createDateTime]
-      : label === 'Update operator'
-      ? [updateLabel, updateOperator, updateDateTime]
-      : [resolveLabel, resolveOperator, resolveDateTime];
+          // Game of Life Rules:
+          // 1. Underpopulation (< 2) or Overpopulation (> 3) = death
+          if (neighbors < 2 || neighbors > 3) {
+            nextGrid[i][j] = 0;
+          }
+          // 2. Reproduction (exactly 3) = life
+          else if (g[i][j] === 0 && neighbors === 3) {
+            nextGrid[i][j] = 1;
+          }
+          // 3. Survival (2 or 3) = maintains state (no change needed)
+        }
+      }
+      return nextGrid;
+    });
 
+    setTimeout(runSimulation, 100);
+  }, [numRows, numCols]);
 
+  const handleStartStop = () => {
+    setRunning(!running);
+    if (!running) {
+      runningRef.current = true;
+      runSimulation();
+    }
+  };
 
-  return user.userId && user.userName ? (
-    <StyledPegaGameOfLifeLibraryGameOfLifeWrapper>
-      <Card>
-      <CardHeader>{title}</CardHeader>
-      <CardContent>
-      <Flex container={{ direction: 'row'}}>
-            <Operator
-              label={hideLabel ? '' : _label}
-              name={user.userName}
-              id={user.userId}
-              getPConnect={getPConnect}
-              value={undefined}
-              validatemessage=''
-              hideLabel={false}
-              readOnly={false}
-              required={false}
-              disabled={false}
-              externalUser={undefined}
-              metaObj={undefined}
-              testId=''
-              helperText=''
-            />
-      {dateTimeValue && (
-        <Fragment>
-          {' '}
-          <DateTimeDisplay value={dateTimeValue} variant='relative' />
-        </Fragment>
-      )}
+  const handleClear = () => {
+    setGrid(createEmptyGrid());
+    setRunning(false);
+  };
+
+  const handleRandomize = () => {
+    const randomGrid = Array.from({ length: numRows }).map(() =>
+      Array.from({ length: numCols }).map(() => (Math.random() > 0.7 ? 1 : 0))
+    );
+    setGrid(randomGrid);
+  };
+
+  const toggleCell = (i, k) => {
+    if (running) return; // Prevent painting while running to avoid rapid mutation race conditions
+    const newGrid = grid.map(arr => [...arr]);
+    newGrid[i][k] = grid[i][k] ? 0 : 1;
+    setGrid(newGrid);
+  };
+
+  return (
+    <div
+      style={{
+        padding: '16px',
+        background: 'var(--app-background-color, #FFF)',
+        borderRadius: '8px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+      }}
+    >
+      <Text variant='h2' as='h2' style={{ marginBottom: '16px' }}>
+        {label}
+      </Text>
+
+      <Flex gap={2} style={{ marginBottom: '16px' }}>
+        <Button variant='primary' onClick={handleStartStop}>
+          {running ? 'Stop' : 'Start'}
+        </Button>
+        <Button variant='secondary' onClick={handleClear}>
+          Clear
+        </Button>
+        <Button variant='secondary' onClick={handleRandomize}>
+          Randomize
+        </Button>
       </Flex>
-      </CardContent>
-      </Card>
 
-    </StyledPegaGameOfLifeLibraryGameOfLifeWrapper>
-  ) : (
-    <StyledPegaGameOfLifeLibraryGameOfLifeWrapper>
-    defVal
-    </StyledPegaGameOfLifeLibraryGameOfLifeWrapper>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          gap: '1px',
+          backgroundColor: '#e1e1e1',
+          width: 'max-content',
+          border: '1px solid #ccc'
+        }}
+      >
+        {grid.map((rowArr, i) =>
+          rowArr.map((col, k) => (
+            <div
+              key={`${i}-${k}`}
+              onClick={() => toggleCell(i, k)}
+              style={{
+                width: 20,
+                height: 20,
+                backgroundColor: grid[i][k] ? 'var(--app-primary-color, #2563EB)' : '#FFF',
+                cursor: running ? 'default' : 'pointer',
+                transition: 'background-color 0.1s ease-in-out'
+              }}
+            />
+          ))
+        )}
+      </div>
+    </div>
   );
-
-
-
 }
 
-
-
-export default withConfiguration(PegaGameOfLifeLibraryGameOfLife);
-
-// as objects are there in props, shallow comparision fails & re-rendering of comp happens even with
-// same key value pairs in obj. hence using custom comparison function on when to re-render
-// const comparisonFn = (prevProps, nextProps) => {
-//   return prevProps.updateDateTime === nextProps.updateDateTime;
-// };
+GameOfLifeWidget.propTypes = {
+  getPConnect: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  cols: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+};
