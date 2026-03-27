@@ -1,0 +1,18 @@
+{
+  "extends": "@pega/tsconfig/index.json",
+  "include": ["./**/*", ".storybook/**/*"],
+  "exclude": ["**/*.mjs"],
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "importsNotUsedAsValues": "remove",
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pega/pcore-pconnect-typedefs/*": ["node_modules/@pega/pcore-pconnect-typedefs/*"]
+    },
+    "esModuleInterop": true,
+    "types": ["jest", "node", "@types/jest"],
+    "verbatimModuleSyntax": false
+  }
+}
